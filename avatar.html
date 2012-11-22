@@ -28,6 +28,7 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 		<script>
+		
 		$(document).ready(function() {
 			var agent;
 			clippy.load('Links', function(clippyAgent) {				
@@ -56,19 +57,30 @@
 			}).mouseup(function (event) {
 				// text is selected, stop animation
 				agent.stop();
+				agent.closeBalloon();
 				// do something with selected text
 				// TODO: do not speak with no selected text
 				
 				if(window.getSelection().toString() != "")
 					proposeTranslation(agent, event);
 				//agent.speak(window.getSelection().toString());
-				
-				replaceSelectedText('VERTAALD');
 			});
 			
+			
+			
+			$("#translate").click(function() {
+				agent.play('Processing');
+				// TODO: Vertaal de tekst
+				inlineTextReplacement('VERTAALDE TEKST');
+				agent.stop();
+				$('#choice').css('display', 'none');
+			});
+			$("#nothing").click(function() {
+				$('#choice').css('display', 'none');
+			});
 		});
 	
-		
+		// Kom naar het midden van het scherm en stel jezelf voor
 		function introduceAgent(agent) {	
 				var width = $(window).width();
 				var height = $(window).height();
@@ -79,16 +91,18 @@
 				
 		}
 		
+		// Kom naar het midden van het scherm en doe een voorstel om de tekst te vertalen
 		function proposeTranslation(agent, event) {
 			// move agent to position
 			agent.moveTo(event.clientX, event.clientY);
-			agent.speak('Do you want me to translate the text for you?');
+			agent.speak('Should I translate the selected text for you?');
 			
 			$('#choice').css('display', 'block');
-			$('#choice').css('top', event.clientY);
-			$('#choice').css('left', event.clientX - 100);
+			$('#choice').css('top', event.pageY - 15);
+			$('#choice').css('left', event.pageX - 90);
 		}
 		
+		// Vervang de geselecteerde text
 		function inlineTextReplacement(replacementText) {
 			var sel, range;
 			if (window.getSelection) {
@@ -100,7 +114,6 @@
 				}
 			}
 		}
-		
 		</script>
 		
 		<!-- Text tranlation content -->
@@ -142,8 +155,8 @@
 		</div>
 		
 		<div id="choice" style="display: none; position: absolute; top: 100px; left: 100px; background-color: blue;">
-			<button type="button">Translate</button> 
-			<button type="button">Do nothing</button> 
+			<button id="translate" type="button">Translate</button> 
+			<button id="nothing" type="button">Do nothing</button> 
 		</div>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
