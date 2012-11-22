@@ -1,74 +1,30 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-	
-	<!-- context menu -->
-	   <link rel="stylesheet" href="css/jquery.contextmenu.css">
-
-	
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-        <![endif]-->
-
-        <!-- Add your site or application content here -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
-	<!-- context menu libs -->	
-    <script src="js/jquery.contextmenu.js"></script>
- 
-	
-		<script>
-		$(document).ready(function() {
-			$('#text').mouseup(function() {
-				// TODO: add context menu for translation
-				//alert(window.getSelection().toString());
-				
-			
-			});
-		});
-		
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script src="jquery.contextmenu.js"></script>
+    <link rel="stylesheet" href="jquery.contextmenu.css">
+    <script>
       $(function() {
         $('#text').contextPopup({
-          title: 'Text Translation Menu',
+          title: 'My Popup Menu',
           items: [
-            {label:'Translate Text',     icon:'icons/edit-lipsum.png',             action:function() { inlineTextReplacement('VERTAALD'); } },
-            {label:'Something Else', icon:'icons/balloon-box.png',                action:function() { alert('Nog niks') } }
+            {label:'Some Item',     icon:'icons/shopping-basket.png',             action:function() { alert('clicked 1') } },
+            {label:'Another Thing', icon:'icons/receipt-text.png',                action:function() { alert('clicked 2') } },
+            {label:'Blah Blah',     icon:'icons/book-open-list.png',              action:function() { alert('clicked 3') } },
+            null, // divider
+            {label:'Sheep',         icon:'icons/application-monitor.png',         action:function() { alert('clicked 4') } },
+            {label:'Cheese',        icon:'icons/bin-metal.png',                   action:function() { alert('clicked 5') } },
+            {label:'Bacon',         icon:'icons/magnifier-zoom-actual-equal.png', action:function() { alert('clicked 6') } },
+            null, // divider
+            {label:'Onwards',       icon:'icons/application-table.png',           action:function() { alert('clicked 7') } },
+            {label:'Flutters',      icon:'icons/cassette.png',                    action:function() { alert('clicked 8') } }
           ]
         });
       });
-	  
-	  		// Vervang de geselecteerde text
-		function inlineTextReplacement(replacementText) {
-			var sel, range;
-			if (window.getSelection) {
-				sel = window.getSelection();
-				if (sel.rangeCount) {
-					range = sel.getRangeAt(0);
-					range.deleteContents();
-					range.insertNode(document.createTextNode(replacementText));
-				}
-			}
-		}
-		</script>
-		<!-- Text tranlation content -->
+    </script>
+  </head>
+  <body style="background-color:#000000; color:#ffffff; font-family:arial,sans-serif">
 
 		<div id="text">
 			<p>
@@ -102,17 +58,7 @@
 				Denboraldi hasieran, behin kupelak itxi eta zenbatu ondoren, sagardogile guztiak bildu eta zozketa burutzen zen, zilarrezko bi pitxerretan zeuden adina kupel kopuruaren beste horrenbesteko papertxo tolestatuak sartzen ziren, paper bakoitzak kupel bakoitzaren zenbaki berbera zuelarik. Paperak ateratzen ziren arabera, hauek kupelen irekitze txanda eta ordena zorrozki adierazten zuten. Ordena honen bidez lehenbiziko kupelak 8 egunez irekiko zirela suposatzen zen, ondoren beste bi kupelak hurrengo 8 egunetan irekiko ziren, etab. Honela gertatu zen, adibidez, 1758an Tolosan.
 			</p>
 		</div>
-		
-		<div>
-			<a href="https://docs.google.com/spreadsheet/viewform?formkey=dDkzWDQyaVdGTUg1TWJaTk9Id0RkckE6MQ&entry_24=no-agent">Go to evaluation form</a>
-		</div>
-		
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <!--<script>
-            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-            s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>-->
-    </body>
+
+    right click out of the box to show the standard browser menu (if you're trying to view-source, right click here)
+  </body>
 </html>
