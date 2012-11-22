@@ -32,29 +32,56 @@
 			var agent;
 			clippy.load('Links', function(clippyAgent) {				
 				clippyAgent.show();
+				agent = clippyAgent;
+				
+				// introduce yourself
+				introduceAgent(agent);
 				
 				// random animation
 				clippyAgent.animate();
-				agent = clippyAgent;
-			});
+				
+			}); 
 		
-			$('#text').mousedown(function() {
-				agent.closeBalloon();
+			$('#text').mousedown(function (event) {
+			// stop with whatever you are doing
+			agent.stop();
+			agent.closeBalloon();
+			
 				if(agent._isIdleAnimation()) {
 					// TODO: do some animation while waiting 'writing'?
 				}
-			}).mouseup(function() {
+				
+				
+				
+			}).mouseup(function (event) {
 				// text is selected, stop animation
 				agent.stop();
 				// do something with selected text
 				// TODO: do not speak with no selected text
-				agent.speak(window.getSelection().toString());
+				
+				if(window.getSelection().toString() != "")
+					proposeTranslation(agent, event);
+				//agent.speak(window.getSelection().toString());
 			});
 			
-			$('#text').select(function() {
-  				alert('Handler for .select() called.');
-			});
 		});
+	
+		
+		function introduceAgent(agent) {	
+				var width = $(window).width();
+				var height = $(window).height();
+				
+				agent.moveTo(width / 2, height / 2);
+				// make the user aware that you are there
+				agent.speak('Hello. If you want to translate text, please select it from the page.');
+				
+		}
+		
+		function proposeTranslation(agent, event) {
+			// move agent to position
+			agent.moveTo(event.clientX, event.clientY);
+			agent.speak('Do you want me to translate the text for you? YES   NO');
+		}
 		</script>
 		
 		<!-- Text tranlation content -->
