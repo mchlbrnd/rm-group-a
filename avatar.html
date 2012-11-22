@@ -50,6 +50,10 @@
 				// TODO: do not speak with no selected text
 				agent.speak(window.getSelection().toString());
 			});
+			
+			$('#text').select(function() {
+  				alert('Handler for .select() called.');
+			});
 		});
 		</script>
 		
