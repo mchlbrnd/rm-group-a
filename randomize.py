@@ -4,7 +4,7 @@ import random
 from mod_python import util, Cookie, apache
 
 PATH = '/home/michael/sites/werockit.nl/rm-group-a/respondents.yaml'
-MIN_RESPONDENTS = 3
+MIN_RESPONDENTS = 30
 NO_AVATAR = 'no-avatar'
 AVATAR = 'avatar'
 
