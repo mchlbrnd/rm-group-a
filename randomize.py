@@ -1,3 +1,4 @@
+import time
 import yaml
 import random
 from mod_python import util, Cookie, apache
@@ -11,7 +12,7 @@ def index(req):
  # check if cookie is set for respondent who already participated
  client_cookie = Cookie.get_cookie(req, 'rm-group-a')
  if client_cookie is None:
-  Cookie.add_cookie(req, 'rm-group-a', 'true')
+  Cookie.add_cookie(req, 'rm-group-a', 'true', expires=time.time()+31*24*3600) # expires after 1 month
  else:
   return 'You already participated.'
  
