@@ -4,7 +4,7 @@ import random
 from mod_python import util, Cookie, apache
 
 PATH = '/home/michael/sites/werockit.nl/rm-group-a/respondents.yaml'
-MIN_RESPONDENTS = 30
+MIN_RESPONDENTS = 3
 NO_AVATAR = 'no-avatar'
 AVATAR = 'avatar'
 
@@ -39,4 +39,4 @@ def index(req):
  util.redirect(req, condition + '.html')
 
 def count_str_in_seq(s, seq):
-	return len([v for v in seq if v is s])
+	return len([v for v in seq if v == s])
