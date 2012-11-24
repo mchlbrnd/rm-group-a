@@ -1,4 +1,3 @@
-import pickle
 import yaml
 import random
 from mod_python import util, Cookie, apache
