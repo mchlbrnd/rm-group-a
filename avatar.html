@@ -52,6 +52,8 @@
 			// stop with whatever you are doing
 			agent.stopCurrent();
 			agent.closeBalloon();
+			// remove all existing highlights
+			$('p').removeClass('highlight');
 			// get <p>'s id and highlight if valid
 			pid = $(this).attr('id');
 			
