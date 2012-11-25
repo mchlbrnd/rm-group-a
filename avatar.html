@@ -16,6 +16,10 @@
         <link rel="stylesheet" href="css/main.css">
 		<link rel="stylesheet" type="text/css" href="ext/clippy/build/clippy.css" media="all">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+		<style type="text/css">
+			p.highlight { background-color: #91D1FF; }
+			button.lanb { width: 5em; }
+		</style>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -31,6 +35,7 @@
 		
 		$(document).ready(function() {
 			var agent;
+			var pid;
 			clippy.load('Links', function(clippyAgent) {				
 				clippyAgent.show();
 				agent = clippyAgent;
@@ -43,17 +48,17 @@
 				
 			}); 
 		
-			$('#text').mousedown(function (event) {
+			$('p').mousedown(function (event) {
 			// stop with whatever you are doing
 			agent.stop();
 			agent.closeBalloon();
+			// get <p>'s id and highlight if valid
+			pid = $(this).attr('id');
 			
-				if(agent._isIdleAnimation()) {
-					// TODO: do some animation while waiting 'writing'?
+				if( pid.substring(0, 2) == 'eu') {
+					$(this).addClass('highlight');
 				}
-				
-				
-				
+							
 			}).mouseup(function (event) {
 				// text is selected, stop animation
 				agent.stop();
@@ -61,22 +66,49 @@
 				// do something with selected text
 				// TODO: do not speak with no selected text
 				
-				if(window.getSelection().toString() != "")
+				if( $(this).hasClass('highlight') )
 					proposeTranslation(agent, event);
 				//agent.speak(window.getSelection().toString());
 			});
-			
-			
+						
 			
 			$("#translate").click(function() {
-				agent.play('Processing');
-				// TODO: Vertaal de tekst
-				inlineTextReplacement('VERTAALDE TEKST');
-				agent.stop();
+				agent.speak('Into which language?');
+				$('#language').fadeIn(670);
 				$('#choice').css('display', 'none');
 			});
 			$("#nothing").click(function() {
 				$('#choice').css('display', 'none');
+				$('#' + pid).removeClass('highlight');
+			});
+			
+			$("#croatian").click(function() {
+				agent.play('GetTechy');
+				$('#language').fadeOut(800);
+				$('#' + pid).hide(2000);
+				$('#cr' + pid.charAt(2)).show(2000);
+				agent.stop();				
+			});
+			$("#dutch").click(function() {
+				agent.play('GetTechy');
+				$('#language').fadeOut(800);
+				$('#' + pid).hide(2000);
+				$('#du' + pid.charAt(2)).show(2000);
+				agent.stop();				
+			});
+			$("#english").click(function() {
+				agent.play('GetTechy');
+				$('#language').fadeOut(800);
+				$('#' + pid).hide(2000);
+				$('#en' + pid.charAt(2)).show(2000);
+				agent.stop();				
+			});
+			$("#french").click(function() {
+				agent.play('GetTechy');
+				$('#language').fadeOut(800);
+				$('#' + pid).hide(2000);
+				$('#fr' + pid.charAt(2)).show(2000);
+				agent.stop();				
 			});
 		});
 	
@@ -87,8 +119,9 @@
 				
 				agent.moveTo(width / 2, height / 2);
 				// make the user aware that you are there
-				agent.speak('Hi, I am your translator. If you want to translate text, you only have to select text from the page.');
-				
+				agent.speak('Hi, I am your translation assistant. Just click on any paragraph you would like to translate.');
+				// move to bottom right
+				agent.moveTo(width / 1.3, height / 1.3);
 		}
 		
 		// Kom naar het midden van het scherm en doe een voorstel om de tekst te vertalen
@@ -100,6 +133,8 @@
 			$('#choice').css('display', 'block');
 			$('#choice').css('top', event.pageY - 15);
 			$('#choice').css('left', event.pageX - 90);
+			$('#language').css('top', event.pageY - 15);
+			$('#language').css('left', event.pageX - 90);
 		}
 		
 		// Vervang de geselecteerde text
@@ -116,45 +151,210 @@
 		}
 		</script>
 		
-		<!-- Text tranlation content -->
-		<div id="text" style="margin:25px;">
+		<div class="text" style="margin:25px;">
 			<p id="completed" style="background:#FFFEBA;">
 				<a href="https://docs.google.com/spreadsheet/viewform?formkey=dHhJdUE1VkgwaFJPTkNadWVudzlKOHc6MQ&entry_3=avatar">Go to evaluation form</a>
 			</p>			
-			<p>
-				TEST1123 - Sagardoaren alderdi eta bitxikeria ezberdinak azaltzerako orduan, ezin liteke utzi Euskal Foruetan duten agerpenaz aipamenik egin gabe. Euskal Herri osoan zehar liburuetan jasotako ordenantza eta lege ugarik urtez-urte sagarrondoa, sagardoa eta sagarrari buruzko legeri oparoa osatu dute. Gaur egun agiri horiek irakurriz lehengo garaietan sagardo ekoizpenak izan zuen garrantziaz jabetu gaitezke. 
+		<!-- Text tranlation content -->
+			<p id="eu1">
+				Sagardoaren alderdi eta bitxikeria ezberdinak azaltzerako
+				orduan, ezin liteke utzi Euskal Foruetan duten agerpenaz aipamenik egin
+				 gabe. Euskal Herri osoan zehar liburuetan jasotako ordenantza eta lege 
+				ugarik urtez-urte sagarrondoa, sagardoa eta sagarrari buruzko legeri 
+				oparoa osatu dute. Gaur egun agiri horiek irakurriz lehengo garaietan 
+				sagardo ekoizpenak izan zuen garrantziaz jabetu gaitezke. 
 				Sagardoa ekoizteko sagar bilketa. Gipuzkoa, Euskal Herria.
-				</br>
-				</br>
-				Antzina Euskal Foruek sagarrondoa asko babesten zuten, babes hau ez zen fruitu zuhaitzari mugatzen, babes honek zuhaitzaren inguruko lursaila ere beregan hartzen zuen. Foruak uneoro sagastiak abereen erasoetatik defendatzen zituen, abere hauen jabeei isunak eta zigorrak ezarriaz. Legeri honek sagarra eta sagastiak eurei nahitan edo nahi gabe kalteak egiten zizkien pertsonetatik ere babesten zituen. Sagarrondoaren defentsa oso zorrotza izatera iritsi zen, lursailaren jabea lurralde bakoitzeko Ordenantzei atxikia egon behar zuelarik, sagarrondoen arteko gutxieneko distantzia bat mantenduz, etab.
-				</br>
-				</br>
-				Euskal Herrian sagarrondoen defentsarako helburuz idatziriko lehen legeak 1189an Lapurdin Rikardo I.a, Lehoibihotzek diktatutakoak dira, hauetan orokorrean sagastietan abereen sarrera debekatzen zen, halaber, sagarrak lapurtu nahi zituzten gaizkileak ere zigortzen ziren. Baina abere jakin batzuen ekintza preseski zigortzen zuten lehen legea Baionan topatzen da, eta honek dioenez sagasti batean sartzen ziren behi edo idien jabeak 60 'sous' buruko isuna ordaindu beharko zuen. Xedapen gehigarriak dioenez dirua salataria eta udaletxearen artean zati berdinetan banatuko zen, guzti hau salatuak kaltetuari kalteengatik ordaindu behar zionaren dirutik independenteki.
-				1245ko nafar foru batean Kanbo eta Ustaritz udalerrietako biztanleak sagar eta sagardo kupel batzuen lapurretaren ondorioz Thibaut I.a Nafarroakoari kexatzen dira.
-				Gipuzkoako 1457ko ordenantzek gutxienez fruitu garaian zeuden txertatutako 5 basa-sagarrondo moztu edo suntsitzen zituenari heriotza zigorra ezartzen zieten. Bizkaiko Foruak ere sagarrondo zuhaitzak mozten zituenari heriotzaz zigortzen zuen.
-				1587an Hernanin emandako ordenantza batzuek egunez sagastietan sartzen ziren ahuntzen jabeei ahuntzeko 24 marabedi eta antxumeko 12 marabediko isunez zigortzen zituen. Gauez sartu ezkero isuna bikoiztu egiten zen.
-				Gipuzkoako Foruan, XXXVIII izenburua, sagarrondoen landaketa zuhaitzetik zuhaitzera 5,58 metroko distantzia errespetatuz burutu behar dela esaten da, neurri honi 'sagar-lur' deitu zitzaion, XIX. mendean oraindik Sara eta Ainhoa udalerrietan hogei oineko neurria erabiltzen zen, hots, 20 oin (oin bat=0,278 metro), sagar-lur neurriaren parekidea zelarik.
-				</br>
-				</br>				
-				Antzinako dolarea Ezkio-Itsaso udalerriko Igartubeiti baserriaren barnean ikusgai. Gipuzkoa, Euskal Herria. Astigarragako bi botila sagardo (Rezola). Sagarraren antzera, sagardoak ere bere babeserako legeria izan zuen. Ziurrenik antzinako garaietako sagardo ekoizpena norberak bere etxean edateko asmoz egindakora mugatuko zen. Gerora, lehengo Herri sakabanatuak zirenak Herri bilduak bilakatzean, zalantzarik gabe sagarra nahiz sagardoa beste produktu batzuekin batera salerosi eta elkartrukatu zen. Bideen eraikitzea eta portuen gauzatzeak ordura arte sagardoa merkaturatzeko erabili ez ziren bide berriak ireki zituzten. Euskal Foruek udalerri batzuetan zein bestetan antzekoak edo berdinak ziren legeak jasotzen zituzten, beste udalerrietako sagardoari sarrera debekatuaz betiere eta lehenik tokian-tokiko sagardoa kontsumitzen ez baitzen. Esate baterako, adibidez, Tolosak Hernaniko sagarra edo sagardoa bertara ekartzea debekatua zuen, baina produktu horiek Hernanin saldu zitzakeen. Era berean, Hernanik Tolosan saldu zitzakeen, baina Hernanira ekartzea debekatua zuen. Honek liskar eta auzi amaigabe ugari sortzen zituen, hauetan sarritan Gipuzkoako Batzar Nagusiek esku hartzen zutelarik.
-				Hernaniko udalerriaren ordenantzen barnean, A atala, 9 negoziatua I seriea, 1542ko ordenantzen arabera hainbat espediente instruitu ziren. Ezagutzen den lehenbiziko espedientea (1. lib. 1. esp.) Esteban Ollorena da, 'Artigako lurraldeko biztanlea, Antiguako Donostia parrokiakoa', honek Hernani udalerri barnean sagardoa saltzen saiatu baitzen.
-				</br>
-				</br>
-				Atal berdineko hirugarren espedientean, 1583an Udalerriaren Errejimentuak Olabarrieta burdinolako biztanleei ezarritako isun baten bidez hauen ohe bateko estalki baten bahitura azaltzen da, hauek aipatutako burdinola horretan Urnietatik ekarritako sagardoa zutela baieztatu baitzen.
-				</br>
-				</br>
-				6. espedientean, 1651 eta 1681 urteen artean aipatzen denez, kontzejuak Hernaniko udalerrira sagardoa ekartzea baimendu zuen, urte horietan urri baitzen, gisa berean, kanporako sagar edo sagardo salmenta debekatzen zuen.
-				</br>
-				</br>
-				Bestalde Euskal Herrian eta gutxienez XIX. mendea arte sagardoaren salmenta oso erregulatua egon zen. Denboraldi bakoitzaren hasieran Udalerriek sagardotegien irekitzeak behatu eta erregulatzen zituzten. Oraindik sagardotegien irekitzea baino kupelen irekitze txanda zorrotzak garrantzitsuagoa ziren. Gaur egun sagardogileak kupelak komeni denean irekitzen ditu, antzina askoz ere sagardotegi gehiago zeuden eta baita konpetentzia gehiago ere, hortaz erregulazioa ezin bestekoa zen. Udaletxeek udalerriko sagardotegi guztietako kupelen sagardoa dastatuko zuen arduradun bat izendatzen zuten, behin dastatu ondoren gerora kupelak itxi ostean hauen irekitze zozketa burutzen zelarik.
-				</br>
-				</br>
-				Denboraldi hasieran, behin kupelak itxi eta zenbatu ondoren, sagardogile guztiak bildu eta zozketa burutzen zen, zilarrezko bi pitxerretan zeuden adina kupel kopuruaren beste horrenbesteko papertxo tolestatuak sartzen ziren, paper bakoitzak kupel bakoitzaren zenbaki berbera zuelarik. Paperak ateratzen ziren arabera, hauek kupelen irekitze txanda eta ordena zorrozki adierazten zuten. Ordena honen bidez lehenbiziko kupelak 8 egunez irekiko zirela suposatzen zen, ondoren beste bi kupelak hurrengo 8 egunetan irekiko ziren, etab. Honela gertatu zen, adibidez, 1758an Tolosan.
+				<br>
+				Antzina Euskal Foruek sagarrondoa asko babesten zuten, babes hau ez 
+				zen fruitu zuhaitzari mugatzen, babes honek zuhaitzaren inguruko 
+				lursaila ere beregan hartzen zuen. Foruak uneoro sagastiak abereen 
+				erasoetatik defendatzen zituen, abere hauen jabeei isunak eta zigorrak 
+				ezarriaz. Legeri honek sagarra eta sagastiak eurei nahitan edo nahi gabe
+				 kalteak egiten zizkien pertsonetatik ere babesten zituen. 
+				Sagarrondoaren defentsa oso zorrotza izatera iritsi zen, lursailaren 
+				jabea lurralde bakoitzeko Ordenantzei atxikia egon behar zuelarik, 
+				sagarrondoen arteko gutxieneko distantzia bat mantenduz, etab.
+			</p>
+			<!-- P1 translations -->
+			<p id="cr1" style="display: none;">
+			Da objasniti razlicite aspekte jabukovace i znati&#382;elje, nije mogao otici bez spominjanja prisutnosti na forumu. Pravilnici i zakoni u cijeloj zemlji u broju knjiga svake godine jabuka, jabukovaca i jabuke Zakon su obecavajuce. Danas, citajuci ove dokumente po prvi put smo shvatili va&#382;nost proizvodnje jabukovace. Jabukovaca jabuka &#382;etve proizvode. Norfolk, Engleska.<br />
+			Forum je sponzoriran od strane jabukom u pro&#353;losti, ta za&#353;tita nije bio ogranicen na stablo oraha, kako bi za&#353;titili zemlju oko stabla, uzimajuci ga s njom. Sudovi uvijek branio vocnjak napadaju stoku, stoka vlasnici kazni i penala postavili. Apple vocnjak u ovom zakonu, a ne da im na&#353;koditi ili da ih za&#353;titi u osobi. Apple je obrana postala vrlo strogi, vlasnik parcele koja mora biti prikljucen na pravilnikom, odr&#382;avanje minimalne udaljenosti izmedu stabala, i tako dalje.
+			</p>
+			<p id="du1" style="display: none;">
+			Om de verschillende aspecten van cider en nieuwsgierigheid uit te leggen, kon niet vertrekken zonder vermelding van de aanwezigheid van het forum. Instellingen en de wetten in het land van het aantal boeken per jaar appel, cider en appels wet zijn veelbelovend. Vandaag de dag, het lezen van deze documenten voor de eerste keer dat we bewust van het belang van de productie van cider. Cider appeloogst producten. Norfolk, Engeland.<br />
+			Het forum werd gesponsord door de appelboom in het verleden werd deze bescherming niet beperkt tot noten, om het land te beschermen om de boom heen, nam hem mee. De rechtbanken altijd verdedigd boomgaard aanvallende dieren, dierlijke eigenaren van de boetes en straffen in te stellen. Appelboomgaard in deze wet en niet om ze te schaden of om ze te beschermen in persoon. Appel verdediging werd zeer streng, de eigenaar van het stuk grond dat moet worden gehecht aan de verordening, een minimale afstand tussen de bomen, en ga zo maar door.
+			</p>
+			<p id="en1" style="display: none;">
+			To explain different aspects of cider and curiosity, could not leave without mention of the presence of the forum. Ordinances and laws throughout the country in the number of books each year apple, cider and apples Act have been promising. Today, reading these documents for the first time we realized the importance of the production of cider. Cider apple harvest produce. Norfolk, England.<br />
+			The forum was sponsored by the apple tree in the past, this protection was not limited to tree nuts, to protect the land around the tree, taking him with it. The courts always defended orchard attacking livestock, livestock owners of the fines and penalties set. Apple orchard in this law and not to harm them or to protect them in person. Apple defense became very strict, the owner of the plot of land which must be attached to the ordinance, maintaining a minimum distance between trees, and so on.
+			</p>
+			<p id="fr1" style="display: none;">
+			Pour expliquer les diff&#233;rents aspects de cidre et de curiosit&#233;, ne pouvait pas laisser sans mention de la pr&#233;sence du forum. Ordonnances et les lois du pays dans le nombre de livres chaque ann&#233;e loi de pomme, cidre et les pommes ont &#233;t&#233; prometteurs. Aujourd'hui, la lecture de ces documents pour la premi&#232;re fois, nous avons r&#233;alis&#233; l'importance de la production de cidre. Produits de r&#233;colte de cidre de pomme. Norfolk, en Angleterre.<br />
+			Le forum a &#233;t&#233; parrain&#233; par le pommier dans le pass&#233;, cette protection ne se limite pas aux noix, pour prot&#233;ger la terre autour de l'arbre, en le prenant avec lui. Les tribunaux ont toujours d&#233;fendu l'&#233;levage verger attaque, les propri&#233;taires de b&#233;tail des amendes et des sanctions pr&#233;vues. Verger de pommiers dans la pr&#233;sente loi et de ne pas leur nuire ou de les prot&#233;ger en personne. Pomme de d&#233;fense est devenue tr&#232;s stricte, le propri&#233;taire de la parcelle qui doit &#234;tre jointe &#224; l'ordonnance, maintenant une distance minimale entre les arbres, et ainsi de suite.
+			</p>
+			<p id="eu2">
+				Euskal Herrian sagarrondoen defentsarako helburuz idatziriko lehen 
+				legeak 1189an Lapurdin Rikardo I.a, Lehoibihotzek diktatutakoak dira, 
+				hauetan orokorrean sagastietan abereen sarrera debekatzen zen, halaber, 
+				sagarrak lapurtu nahi zituzten gaizkileak ere zigortzen ziren. Baina 
+				abere jakin batzuen ekintza preseski zigortzen zuten lehen legea Baionan
+				 topatzen da, eta honek dioenez sagasti batean sartzen ziren behi edo 
+				idien jabeak 60 'sous' buruko isuna ordaindu beharko zuen. Xedapen 
+				gehigarriak dioenez dirua salataria eta udaletxearen artean zati 
+				berdinetan banatuko zen, guzti hau salatuak kaltetuari kalteengatik 
+				ordaindu behar zionaren dirutik independenteki.
+				<br>
+								1245ko nafar foru batean Kanbo eta Ustaritz udalerrietako biztanleak
+				 sagar eta sagardo kupel batzuen lapurretaren ondorioz Thibaut I.a 
+				Nafarroakoari kexatzen dira.
+								Gipuzkoako 1457ko ordenantzek gutxienez fruitu garaian zeuden 
+				txertatutako 5 basa-sagarrondo moztu edo suntsitzen zituenari heriotza 
+				zigorra ezartzen zieten. Bizkaiko Foruak ere sagarrondo zuhaitzak mozten
+				 zituenari heriotzaz zigortzen zuen.
+								1587an Hernanin emandako ordenantza batzuek egunez sagastietan 
+				sartzen ziren ahuntzen jabeei ahuntzeko 24 marabedi eta antxumeko 12 
+				marabediko isunez zigortzen zituen. Gauez sartu ezkero isuna bikoiztu 
+				egiten zen.
+								Gipuzkoako Foruan, XXXVIII izenburua, sagarrondoen landaketa 
+				zuhaitzetik zuhaitzera 5,58 metroko distantzia errespetatuz burutu behar
+				 dela esaten da, neurri honi 'sagar-lur' deitu zitzaion, XIX. mendean 
+				oraindik Sara eta Ainhoa udalerrietan hogei oineko neurria erabiltzen 
+				zen, hots, 20 oin (oin bat=0,278 metro), sagar-lur neurriaren parekidea 
+				zelarik.
+			</p>
+			<!-- P2 translations -->
+			<p id="cr2" style="display: none;">
+			Kako bi se obranili zakon pisani u Baskiji, jabuka Lapurdin 1189 Richard ja, su diktatutakoak Lehoibihotzek, drvece, &#382;ivotinje opcenito, zabranjuje ulazak kriminalaca koji &#382;ele ukrasti jabuke takoder su ka&#382;njeni. Ali akcije odredenih &#382;ivotinja je ka&#382;njivo zakonom izricito se nalazi u Bayonne, a farme koje su ukljucene u krava ili vol vlasnik 60 'sous' glave ce morati platiti novcanu kaznu. Dodatna odredba da je novac bio da se distribuira u jednakim dijelovima izmedu salataria i vijeca, platiti za svu &#353;tetu &#382;rtvi prijavljen odvojeno skrenuti.<br />
+			Regionalna vlada Navarre u 1245 i Ustaritz Kanbo stanovni&#353;tva kao rezultat krade nekih barela jabuka jabukovaca i Navarre Thibaut cu &#382;aliti. U 1457 pravilnici bili su ukljuceni u najmanje pet Basa-jabuka voce, smanjiti ili uni&#353;titi utvrde su osudeni na smrt. Tko rezati jabuke Biskajski je ka&#382;njivo smrcu. Neki dan su bili ukljuceni u pravilnikom Hernani 1587 vocnjak vlasnika koza koza bili ka&#382;njivo novcanom kaznom od 24 marabedi i antxumeko 12 marabediko. Ako redu je udvostrucen u noc. Evo, naslov XXXVIII, stablo sadnju jabuka koja ce se provesti u skladu s udaljenosti od 5,58 metara, ova mjera 'jabuka-zemlja' je bio pozvan, XIX. Ne Sara i Ainhoa ??u dvadeset stopala velicine je kori&#353;ten, tj. 20 stopa (jedna stopa = 0,278 m), &#353;to ukazuje na velicinu jabuke.
+			</p>
+			<p id="du2" style="display: none;">
+			Om de wet geschreven in het Baskenland te verdedigen, appel Lapurdin 1189 Richard I, zijn diktatutakoak Lehoibihotzek, bomen, dieren in het algemeen, verbiedt de invoer van de criminelen die willen stelen de appels werden ook gestraft. Maar de acties van bepaalde dieren is strafbaar door de wet uitdrukkelijk wordt gevonden in Bayonne, en de bedrijven die werden opgenomen in een koe of os eigenaar van de 60 'sous' hoofd zou hebben om een ??boete te betalen. Extra voorziening dat het geld zou worden verdeeld in gelijke delen tussen salataria en de Raad, om voor alle schade betalen aan het slachtoffer afzonderlijk worden gerapporteerd op een zijspoor.<br>
+			Regionale regering van Navarra in 1245 en Ustaritz Kanbo bevolking als gevolg van de diefstal van een aantal vaten van appels en cider Navarra Thibaut Ik zal klagen. De 1457 verordeningen zijn opgenomen in ten minste 5 basa-appel, werden gesneden of vernietigen van de forten ter dood veroordeeld. Wie knipt de appelbomen van Biskaje werd bestraft met de dood. Een paar dagen werden opgenomen in de ordonnantie van Hernani 1587 boomgaard eigenaren geiten geiten waren bestraft met een boete van 24 marabedi en antxumeko 12 marabediko. Als de boete is verdubbeld in de nacht. Hier de titel XXXVIII, planten van bomen appelboom die moet worden uitgevoerd in overeenstemming met een afstand van 5,58 meter, werd deze maatregel 'appel-land' genoemd, XIX. Niet de Sara en Ainhoa ??in de twintig-voetmaat werd gebruikt, dat wil zeggen, 20 voet (een voet = 0,278 m), die de grootte van de appelen aan te tonen.
+			</p>
+			<p id="en2" style="display: none;">
+			In order to defend the law written in the Basque Country, apple Lapurdin 1189 Richard I, are diktatutakoak Lehoibihotzek, trees, animals in general, prohibits the entry of the criminals who want to steal the apples were also punished. But the actions of certain animals is punishable by the law specifically is found in Bayonne, and the farms that were included in a cow or ox owner of the 60 'sous' head would have to pay a fine. Additional provision that the money was to be distributed in equal parts between salataria and the council, to pay for all damages to the victim reported separately sidetrack.<br>
+			Regional Government of Navarre in 1245 and Ustaritz Kanbo population as a result of theft of some barrels of apples and cider Navarre Thibaut I will complain. The 1457 ordinances were included in at least 5 basa-apple fruit, cut or destroy the forts were sentenced to death. Who cut the apple trees of Biscay was punishable by death. Some days were included in the ordinance of Hernani 1587 orchard owners goats goats were punishable by a fine of 24 marabedi and antxumeko 12 marabediko. If the fine was doubled into the night. Here, the title XXXVIII, tree planting apple tree that is to be carried out in accordance with a distance of 5.58 meters, this measure 'apple-land' was called, XIX. Not the Sara and Ainhoa ??in the twenty-foot size was used, ie, 20 foot (one foot = 0.278 m), which demonstrate the size of apples.
+			</p>
+			<p id="fr2" style="display: none;">
+			Afin de d&#233;fendre la loi &#233;crite dans le Pays Basque, la pomme Lapurdin 1189 Richard I, sont diktatutakoak Lehoibihotzek, les arbres, les animaux en g&#233;n&#233;ral, interdit l'entr&#233;e des criminels qui veulent voler les pommes ont &#233;galement &#233;t&#233; sanctionn&#233;s. Mais les actions de certains animaux est punissable par la loi est express&#233;ment conclu &#224; Bayonne, et les fermes qui ont &#233;t&#233; inclus dans une propri&#233;taire de la vache ou un b&#339;uf de la t&#234;te 60 'sous' aurait &#224; payer une amende. La disposition additionnelle que l'argent devait &#234;tre distribu&#233; &#224; parts &#233;gales entre salataria et le conseil, de payer tous les dommages et int&#233;r&#234;ts &#224; la victime pr&#233;sent&#233;es s&#233;par&#233;ment d&#233;tourner.<br>
+			Gouvernement r&#233;gional de Navarre en 1245 et Ustaritz Kanbo la population &#224; la suite d'un vol de quelques barils de pommes et cidre de Navarre Thibaut je vais porter plainte. Les ordonnances 1457 ont &#233;t&#233; inclus dans au moins 5 basa-pommes, couper ou d&#233;truire les forts ont &#233;t&#233; condamn&#233;s &#224; mort. Qui a coup&#233; les pommiers de Gascogne &#233;tait passible de mort. Quelques jours ont &#233;t&#233; inclus dans l'ordonnance de propri&#233;taires de vergers ch&#232;vres Hernani 1587 ch&#232;vres &#233;taient passibles d'une amende de 24 marabedi et antxumeko 12 marabediko. Si l'amende est doubl&#233; dans la nuit. Ici, le titre XXXVIII, la plantation d'arbres pommier qui doit &#234;tre r&#233;alis&#233;e en conformit&#233; avec une distance de 5,58 m&#232;tres, cette mesure &#171;pomme-terre&#187; a &#233;t&#233; appel&#233;, XIX. Pas le Sara et Ainhoa ??la taille de vingt pieds a &#233;t&#233; utilis&#233;, soit 20 pieds (un pied = 0,278 m), ce qui d&#233;montre le calibre des pommes.
+			</p>
+			<p id="eu3">				
+				Antzinako dolarea Ezkio-Itsaso udalerriko Igartubeiti baserriaren 
+				barnean ikusgai. Gipuzkoa, Euskal Herria. Astigarragako bi botila 
+				sagardo (Rezola). Sagarraren antzera, sagardoak ere bere babeserako 
+				legeria izan zuen. Ziurrenik antzinako garaietako sagardo ekoizpena 
+				norberak bere etxean edateko asmoz egindakora mugatuko zen. Gerora, 
+				lehengo Herri sakabanatuak zirenak Herri bilduak bilakatzean, 
+				zalantzarik gabe sagarra nahiz sagardoa beste produktu batzuekin batera 
+				salerosi eta elkartrukatu zen. Bideen eraikitzea eta portuen gauzatzeak 
+				ordura arte sagardoa merkaturatzeko erabili ez ziren bide berriak ireki 
+				zituzten. Euskal Foruek udalerri batzuetan zein bestetan antzekoak edo 
+				berdinak ziren legeak jasotzen zituzten, beste udalerrietako sagardoari 
+				sarrera debekatuaz betiere eta lehenik tokian-tokiko sagardoa 
+				kontsumitzen ez baitzen. Esate baterako, adibidez, Tolosak Hernaniko 
+				sagarra edo sagardoa bertara ekartzea debekatua zuen, baina produktu 
+				horiek Hernanin saldu zitzakeen. Era berean, Hernanik Tolosan saldu 
+				zitzakeen, baina Hernanira ekartzea debekatua zuen. Honek liskar eta 
+				auzi amaigabe ugari sortzen zituen, hauetan sarritan Gipuzkoako Batzar 
+				Nagusiek esku hartzen zutelarik.
+			</p>
+			<!-- P3 translations -->
+			<p id="cr3" style="display: none;">
+			Biv&#353;i pritisnite narativni dio busa. Norfolk, Engleska. Astigarragako dvije boce jabukovace (Rezola). Poput jabuka, jabukovaca bio njegov zakonska za&#353;tita. Vjerojatno najvi&#353;e davnina, jabukovace proizvodnja je ogranicena vlastitoj kuci kako bi se piti. Kasnije, ljudi su se raspr&#353;ili po prvi postao popularan, nema sumnje jabucnog i druge proizvode za trgovinu i razmjenu.Provedba izgradnju cesta i luka nije kori&#353;ten do jabukovaca tr&#382;i&#353;tu s otvaranjem novih kanala. U provincijskim gradovima koji su bili ili slican ili identican zakonu, zabranjen od ostatka jabukovace i jabukovace konzumira na prvom mjestu nije bio lokalni. Kao &#353;to su, na primjer, nije dozvoljeno da dovedu do Toulouse Hernani jabuke ili jabukovace, ali ovi proizvodi mogli biti prodan u Hernani. Na isti nacin, to bi mogao prodati Hernani Toulouse, ali nije dopu&#353;teno unositi u Hernani. To stvara puno sukoba i nikad ne zavr&#353;ava nesuglasicama, cesto u rukama Glavnoj skup&#353;tini ce potrajati.
+			</p>
+			<p id="du3" style="display: none;">
+			Voormalig pers verhalende deel van de bus. Norfolk, Engeland. Astigarragako twee flessen cider (Rezola). Zoals appels, cider was zijn wetgeving inzake de bescherming. Waarschijnlijk de oudste tijden, werd cider productie beperkt door hun eigen huis op orde te drinken. Later werden mensen verspreid op het eerste steeds populairder, zonder twijfel de appel cider en andere producten aan de handel en uitwisseling. De uitvoering van de aanleg van wegen en havens werden niet gebruikt totdat de cider markt met de opening van nieuwe kanalen. In de provinciesteden die ofwel gelijk of identiek zijn aan de wet, verbannen uit de rest van de cider en cider verbruikt in de eerste plaats was niet lokaal. Zoals, bijvoorbeeld, werd niet toegestaan ??om naar Toulouse Hernani appels en cider, maar deze producten kunnen worden verkocht in Hernani. Op dezelfde manier, kan het verkopen Hernani Toulouse, maar was niet toegestaan ??om in Hernani. Dit zorgt voor veel conflict en de eindeloze discussies, vaak in de handen van de Algemene Vergadering te nemen zou.
+			</p>
+			<p id="en3" style="display: none;">
+			Former press narrative part of the Bus. Norfolk, England. Astigarragako two bottles of cider (Rezola). Like apples, cider was his protection legislation. Probably the most ancient times, cider production was limited by their own house in order to drink. Later, people were scattered at first becoming popular, no doubt the apple cider and other products to the trade and exchange. The implementation of the construction of roads and ports were not used until the cider market with the opening of new channels. In the provincial towns that were either similar or identical to the law, banned from the rest of the cider and cider consumed in the first place was not local. Such as, for example, was not allowed to bring to Toulouse Hernani apples or cider, but these products could be sold in Hernani. In the same way, it could sell Hernani Toulouse, but was not allowed to bring in Hernani. This creates a lot of conflict and the never-ending disputes, often in the hands of the General Assembly would take.
+			</p>
+			<p id="fr3" style="display: none;">
+			Ancien partie narrative de presse du bus. Norfolk, en Angleterre. Astigarragako deux bouteilles de cidre (Rezola). Comme les pommes, le cidre &#233;tait sa l&#233;gislation sur la protection. Probablement la plus haute antiquit&#233;, la production de cidre a &#233;t&#233; limit&#233;e par leur propre maison pour boire. Plus tard, les gens &#233;taient dispers&#233;s dans un premier temps de devenir populaire, sans doute le cidre de pomme et d'autres produits pour le commerce et les &#233;changes. La mise en &#339;uvre de la construction de routes et les ports n'ont pas &#233;t&#233; utilis&#233;s jusqu'&#224; ce que le march&#233; du cidre avec l'ouverture de nouveaux canaux. Dans les villes de province qui &#233;taient soit similaire ou identique &#224; la loi, bannis du reste du cidre et le cidre consomm&#233; en premier lieu n'&#233;tait pas locale. Tels que, par exemple, n'a pas &#233;t&#233; autoris&#233; &#224; porter &#224; Toulouse pommes ou de cidre Hernani, mais ces produits pourraient &#234;tre vendus dans Hernani. De la m&#234;me mani&#232;re, elle pourrait vendre Hernani Toulouse, mais n'a pas &#233;t&#233; autoris&#233; &#224; apporter &#224; Hernani. Cela cr&#233;e beaucoup de conflits et les disputes incessantes, souvent entre les mains de l'Assembl&#233;e g&#233;n&#233;rale prendrait.
+			</p>
+			<p id="eu4">
+				Atal berdineko hirugarren espedientean, 1583an Udalerriaren 
+				Errejimentuak Olabarrieta burdinolako biztanleei ezarritako isun baten 
+				bidez hauen ohe bateko estalki baten bahitura azaltzen da, hauek 
+				aipatutako burdinola horretan Urnietatik ekarritako sagardoa zutela 
+				baieztatu baitzen.
+				6. espedientean, 1651 eta 1681 urteen artean aipatzen denez, 
+				kontzejuak Hernaniko udalerrira sagardoa ekartzea baimendu zuen, urte 
+				horietan urri baitzen, gisa berean, kanporako sagar edo sagardo salmenta
+				 debekatzen zuen.
+				<br>
+				Hernaniko udalerriaren ordenantzen barnean, A atala, 9 negoziatua I 
+				seriea, 1542ko ordenantzen arabera hainbat espediente instruitu ziren. 
+				Ezagutzen den lehenbiziko espedientea (1. lib. 1. esp.) Esteban Ollorena
+				 da, 'Artigako lurraldeko biztanlea, Antiguako Donostia parrokiakoa', 
+				honek Hernani udalerri barnean sagardoa saltzen saiatu baitzen.
+			</p>
+			<!-- P4 translations -->
+			<p id="cr4" style="display: none;">
+			Treci rekord u istom odjeljku, fino set u 1583 od strane stanovnika grada Errejimentuak Olabarrieta Forge ove obecanja je poklopac za krevet, potvrdili su da su imali jabukovace iz Urnieta u kovacnici. 6. rekord, ona se spominje izmedu 1651 i 1681, Vijece je ovla&#353;teno donijeti jabukovaca grad Hernani, bio rijetki u tim godinama, kao i izvan zabranjenog jabuka ili jabukovaca prodaje.<br />
+			Pravilnici unutar opcine Hernani, sekcije, sam pregovarao niz 9, 1542, u skladu s pravilnicima iz istra&#382;nog rekord.Prvi poznati zapis (1. Lib. 1. Esp.) Esteban je Ollo, 'Artigako lokalni stanovnik, biv&#353;i &#382;upna crkva San Sebastianu, u opcini Hernani poku&#353;ava prodati jabukovace.
+			</p>
+			<p id="du4" style="display: none;">
+			De derde plaat van dezelfde afdeling, een prima set in 1583 door de inwoners van de stad Errejimentuak Olabarrieta smeden deze toezeggingen is een cover voor een bed, ze bevestigd dat ze cider van Urnieta had in de smidse. 6. record, wordt vermeld tussen 1651 en 1681, de raad bevoegd was om cider stad Hernani te brengen, was schaars in die jaren, alsmede, buiten de verboden appel of cider verkopen.<br />
+			Verordeningen binnen de gemeente Hernani, A sectie, Ik onderhandelde een serie van 9, 1542 in overeenstemming met de verordeningen van het onderzoek record. De eerste bekende record van (1. Lib. 1. Esp.) Esteban is Ollo, 'Artigako lokale bewoner, de voormalige parochiekerk van San Sebastian, in de gemeente Hernani probeerde te cider verkopen.
+			</p>
+			<p id="en4" style="display: none;">
+			The third record of the same section, a fine set in 1583 by the inhabitants of the town Errejimentuak Olabarrieta forge these pledges is a cover for a bed, they confirmed that they had cider from Urnieta in the forge. 6. record, it is mentioned between 1651 and 1681, the council was authorized to bring cider town of Hernani, was scarce in those years, as well as, outside the forbidden apple or cider sales.<br />
+			Ordinances within the municipality of Hernani, A section, I negotiated a series of 9, 1542 in accordance with the ordinances of the investigation record. The first known record of (1. Lib. 1. Esp.) Esteban is Ollo, 'Artigako local inhabitant, the former parish church of San Sebastian, in the municipality of Hernani was trying to sell cider.
+			</p>
+			<p id="fr4" style="display: none;">
+			Le troisi&#232;me enregistrement de la m&#234;me section, une amende fix&#233;e en 1583 par les habitants de la ville Olabarrieta Errejimentuak forger ces engagements est une couverture pour un lit, ils ont confirm&#233; qu'ils avaient cidre de Urnieta dans la forge. 6. dossier, il est mentionn&#233; entre 1651 et 1681, le conseil a autoris&#233; &#224; apporter ville de cidre d'Hernani, &#233;tait rare en ces ann&#233;es-l&#224;, ainsi que, en dehors de la pomme interdite ou ventes de cidre.<br />
+			Les ordonnances de la municipalit&#233; d'Hernani, un article, j'ai n&#233;goci&#233; une s&#233;rie de 9, 1542 en conformit&#233; avec les ordonnances du dossier d'enqu&#234;te. Le premier enregistrement connu de (1. Lib. 1. Esp.) Esteban est Ollo, &#171;Artigako habitant local, l'ancienne &#233;glise paroissiale de San Sebastian, dans la commune d'Hernani a &#233;t&#233; d'essayer de vendre le cidre.
+			</p>
+			<p id="eu5">
+				Bestalde Euskal Herrian eta gutxienez XIX. mendea arte sagardoaren 
+				salmenta oso erregulatua egon zen. Denboraldi bakoitzaren hasieran 
+				Udalerriek sagardotegien irekitzeak behatu eta erregulatzen zituzten. 
+				Oraindik sagardotegien irekitzea baino kupelen irekitze txanda zorrotzak
+				 garrantzitsuagoa ziren. Gaur egun sagardogileak kupelak komeni denean 
+				irekitzen ditu, antzina askoz ere sagardotegi gehiago zeuden eta baita 
+				konpetentzia gehiago ere, hortaz erregulazioa ezin bestekoa zen. 
+				Udaletxeek udalerriko sagardotegi guztietako kupelen sagardoa dastatuko 
+				zuen arduradun bat izendatzen zuten, behin dastatu ondoren gerora 
+				kupelak itxi ostean hauen irekitze zozketa burutzen zelarik.
+				<br>
+				Denboraldi hasieran, behin kupelak itxi eta zenbatu ondoren, 
+				sagardogile guztiak bildu eta zozketa burutzen zen, zilarrezko bi 
+				pitxerretan zeuden adina kupel kopuruaren beste horrenbesteko papertxo 
+				tolestatuak sartzen ziren, paper bakoitzak kupel bakoitzaren zenbaki 
+				berbera zuelarik. Paperak ateratzen ziren arabera, hauek kupelen 
+				irekitze txanda eta ordena zorrozki adierazten zuten. Ordena honen bidez
+				 lehenbiziko kupelak 8 egunez irekiko zirela suposatzen zen, ondoren 
+				beste bi kupelak hurrengo 8 egunetan irekiko ziren, etab. Honela gertatu
+				 zen, adibidez, 1758an Tolosan.
+			</p>
+			<!-- P5 translations -->
+			<p id="cr5" style="display: none;">
+			S druge strane, barem u Baskiji i XIX. Prodaja stoljeca jabukovace vrlo je reguliran. Opcine pocetku svake sezone promatrati i regulirati otvaranje jabukovace. Va&#382;nije od otvaranja jabukovaca barela jo&#353; uvijek o&#353;trim u uvodnom kolu. Bacve od jabukovace kada se otvara danas, nekoc bili mnogo vi&#353;e jabukovace i vi&#353;e konkurencija, tako da on ne mo&#382;e kontrolirati.Gradsko vijece barela jabukovaca degustacija jabukovace, imenovan je slu&#382;benik, a zatim poku&#353;ajte ponovno kasnije nakon &#353;to je zatvorena za otvaranje ove barela morali povuci.<br />
+			Na pocetku sezone, nakon racunajuci barela zatvoren i jabukovace je izvuci zajedno sve srebro dobi barela dvije staklenke druge, tako da presavijeni papir, svaki rad ima isti broj barela. Prema pisanju tog lista iza&#353;ao, bacve od otvaranja kruga i bila strogo u redu. S ovim redoslijedom, prve bacve su trebali otvoriti na osam dana, a druga dva barela su otvorena u narednih osam dana, i tako dalje. To se dogodilo, primjerice, u Toulouseu 1758.
+			</p>
+			<p id="du5" style="display: none;">
+			Anderzijds, althans in Baskenland en XIX. Verkoop van de Eeuw cider werd sterk gereguleerd. Gemeenten het begin van elk seizoen te observeren en reguleren van de opening van de cider. Belangrijker dan de opening van cider vaten nog steeds scherp in de openingsronde. Vaten van cider als het opent vandaag, waren ooit veel meer cider en meer concurrentie, zodat hij niet kan beheersen. De gemeenteraad van vaten cider proeven cider, werd hij benoemd tot officier, en probeer het later opnieuw na gesloten naar open deze vaten moesten trekken.<br />
+			Aan het begin van het seizoen, na het tellen de vaten gesloten en de cider was samenbrengt alle zilver leeftijd van de vaten twee potten van de andere zodat het gevouwen papier, papier met elk hetzelfde aantal vaten. Volgens de krant kwam, de vaten van de openingsronde en was strikt in orde. Met deze volgorde, de eerste vaten zouden openen in 8 dagen werden de andere twee vaten geopend in de volgende 8 dagen enzovoort. Dit gebeurde bijvoorbeeld in Toulouse in 1758.
+			</p>
+			<p id="en5" style="display: none;">
+			On the other hand, at least in the Basque Country and XIX. Sale of the Century cider was highly regulated. Municipalities beginning of each season to observe and regulate the opening of the cider. More important than the opening of cider barrels still sharp in the opening round. Barrels of cider when it opens today, were once much more cider and more competition, so he can not control. The City Council of barrels of cider tasting cider, he was named an officer, and then try again later after being closed to open these barrels had to draw.<br />
+			At the beginning of the season, after counting the barrels closed and the cider was to draw together all of the silver age of the barrels of two jars of the other so that the folded paper, each paper having the same number of barrels. According to the paper came out, the barrels of the opening round and was strictly in order. With this order, the first barrels were supposed to open at 8 days, the other two barrels were opened in the next 8 days, and so on. This happened, for example, in Toulouse in 1758.
+			</p>
+			<p id="fr5" style="display: none;">
+			D'autre part, au moins dans le Pays Basque et XIX. La vente du cidre si&#232;cle a &#233;t&#233; fortement r&#233;glement&#233;. Municipalit&#233;s au d&#233;but de chaque saison d'observer et de r&#233;guler l'ouverture du cidre. Plus important que l'ouverture des tonneaux de cidre encore vives dans la manche d'ouverture. Tonneaux de cidre quand elle s'ouvre aujourd'hui, &#233;taient autrefois beaucoup plus de cidre et une concurrence accrue, de sorte qu'il ne peut contr&#244;ler. Le conseil municipal de tonneaux de cidre d&#233;gustation de cidre, il a &#233;t&#233; nomm&#233; officier, puis r&#233;essayez plus tard apr&#232;s avoir &#233;t&#233; ferm&#233;e pour ouvrir ces barils ont d&#251; dessiner.<br />
+			Au d&#233;but de la saison, apr&#232;s avoir compt&#233; les barils ferm&#233;s et le cidre &#233;tait de r&#233;unir tous l'&#226;ge d'argent des barils de deux pots de l'autre de sorte que le papier pli&#233;, chaque document ayant le m&#234;me nombre de barils. Selon le journal est sorti, les barils de la premi&#232;re ronde et &#233;tait strictement dans l'ordre. Avec cette commande, les premiers barils &#233;taient cens&#233;s ouvrir &#224; 8 jours, les deux autres barils ont &#233;t&#233; ouverts dans les 8 jours suivants, et ainsi de suite. Ce qui s'est pass&#233;, par exemple, &#224; Toulouse en 1758.
 			</p>
 		</div>		
 		<div id="choice" style="display: none; position: absolute; top: 100px; left: 100px; background-color: blue;">
 			<button id="translate" type="button">Translate</button> 
 			<button id="nothing" type="button">Do nothing</button> 
+		</div>
+		<div id="language" style="display: none; position: absolute; top: 200px; left: 200px; background-color: blue; width: 5em;">
+			<button id="croatian" class="lanb" type="button">Croatian</button> 
+			<button id="dutch" class="lanb" type="button">Dutch</button>
+			<button id="english" class="lanb" type="button">English</button> 
+			<button id="french" class="lanb" type="button">French</button> 
 		</div>
     </body>
 </html>
