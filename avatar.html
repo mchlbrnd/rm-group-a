@@ -50,7 +50,7 @@
 		
 			$('p').mousedown(function (event) {
 			// stop with whatever you are doing
-			agent.stop();
+			agent.stopCurrent();
 			agent.closeBalloon();
 			// get <p>'s id and highlight if valid
 			pid = $(this).attr('id');
@@ -130,7 +130,7 @@
 			agent.moveTo(event.clientX, event.clientY);
 			agent.speak('Should I translate the selected text for you?');
 			
-			$('#choice').css('display', 'block');
+			$('#choice').fadeIn(2000);
 			$('#choice').css('top', event.pageY - 15);
 			$('#choice').css('left', event.pageX - 90);
 			$('#language').css('top', event.pageY - 15);
