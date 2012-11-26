@@ -18,7 +18,9 @@
 	
 	<!-- context menu -->
 	   <link rel="stylesheet" href="css/jquery.contextmenu.css">
-
+	   <style type="text/css">
+			p.highlight { background-color: #91D1FF; }
+	   </style>
 	
     </head>
     <body>
@@ -36,6 +38,7 @@
  
 	
 		<script>
+		var pid;
 		var numTranslated = 0;
 		var numToTranslate = 3;
 		$(document).ready(function() {
@@ -45,7 +48,17 @@
 				
 			
 			});
-				
+			
+			$('p').mousedown(function () {
+				// remove all existing highlights
+				$('p').removeClass('highlight');
+				// get <p>'s id and highlight if valid
+				pid = $(this).attr('id');			
+				if( pid.substring(0, 2) == 'eu') {
+					$(this).addClass('highlight');
+				}							
+			});
+			
 			$(function() {
 				$('#eu1').contextPopup({
 				  title: 'Translation Assistant',
