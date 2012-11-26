@@ -32,8 +32,9 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 		<script>
-		
-		$(document).ready(function() {
+		var numTranslated = 0;
+		var numToTranslate = 3;
+		$(document).ready(function() {			
 			var agent;
 			var pid;
 			clippy.load('Links', function(clippyAgent) {				
@@ -90,6 +91,7 @@
 				$('#' + pid).hide(2000);
 				$('#cr' + pid.charAt(2)).show(2000);
 				agent.stop();				
+				setTimeout(checkNumTranslated(), 3000);
 			});
 			$("#dutch").click(function() {
 				agent.play('GetTechy');
@@ -97,13 +99,15 @@
 				$('#' + pid).hide(2000);
 				$('#du' + pid.charAt(2)).show(2000);
 				agent.stop();				
+				setTimeout(checkNumTranslated(), 3000);
 			});
 			$("#english").click(function() {
 				agent.play('GetTechy');
 				$('#language').fadeOut(800);
 				$('#' + pid).hide(2000);
 				$('#en' + pid.charAt(2)).show(2000);
-				agent.stop();				
+				agent.stop();		
+				setTimeout(checkNumTranslated(), 3000);				
 			});
 			$("#french").click(function() {
 				agent.play('GetTechy');
@@ -111,8 +115,16 @@
 				$('#' + pid).hide(2000);
 				$('#fr' + pid.charAt(2)).show(2000);
 				agent.stop();				
+				setTimeout(checkNumTranslated(), 3000);
 			});
 		});
+		
+		function checkNumTranslated() {
+			numTranslated++;
+			if(numTranslated >= numToTranslate) {
+				window.location = 'https://docs.google.com/spreadsheet/viewform?formkey=dHhJdUE1VkgwaFJPTkNadWVudzlKOHc6MQ&entry_3=avatar';
+			}
+		}
 	
 		// Kom naar het midden van het scherm en stel jezelf voor
 		function introduceAgent(agent) {	
@@ -154,9 +166,19 @@
 		</script>
 		
 		<div class="text" style="margin:25px;">
-			<p id="completed" style="background:#FFFEBA;">
-				<a href="https://docs.google.com/spreadsheet/viewform?formkey=dHhJdUE1VkgwaFJPTkNadWVudzlKOHc6MQ&entry_3=avatar">Go to evaluation form</a>
-			</p>			
+			<div style="background:#FFFEBA;">
+				<b>Instructions</b>
+				</br>
+				To complete the translation task, translate three of the paragraphs below. After you finished the last translation, you will be redirected to the survey.
+				</br>
+				</br>
+				We recommend you to translate:
+				<ul>
+					<li>The first paragraph to English,</li>
+					<li>The second paragraph to Dutch,</li>
+					<li>The third paragraph to a language of your choice.</li>
+				</ul>
+			</div>			
 		<!-- Text tranlation content -->
 			<p id="eu1">
 				Sagardoaren alderdi eta bitxikeria ezberdinak azaltzerako

@@ -36,6 +36,8 @@
  
 	
 		<script>
+		var numTranslated = 0;
+		var numToTranslate = 3;
 		$(document).ready(function() {
 			$('#text').mouseup(function() {
 				// TODO: add context menu for translation
@@ -48,10 +50,10 @@
 				$('#eu1').contextPopup({
 				  title: 'Translation Assistant',
 				  items: [
-					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr1').show("slow"); $('#eu1').hide("slow"); } },
-					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du1').show("slow"); $('#eu1').hide("slow"); } },
-					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en1').show("slow"); $('#eu1').hide("slow"); } },
-					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr1').show("slow"); $('#eu1').hide("slow"); } }
+					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr1').show("slow"); $('#eu1').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du1').show("slow"); $('#eu1').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en1').show("slow"); $('#eu1').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr1').show("slow"); $('#eu1').hide("slow"); setTimeout(checkNumTranslated(), 3000) } }
 				  ]
 				});
 			});
@@ -60,10 +62,10 @@
 				$('#eu2').contextPopup({
 				  title: 'Translation Assistant',
 				  items: [
-					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr2').show("slow"); $('#eu2').hide("slow"); } },
-					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du2').show("slow"); $('#eu2').hide("slow"); } },
-					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en2').show("slow"); $('#eu2').hide("slow"); } },
-					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr2').show("slow"); $('#eu2').hide("slow"); } }
+					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr2').show("slow"); $('#eu2').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du2').show("slow"); $('#eu2').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en2').show("slow"); $('#eu2').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr2').show("slow"); $('#eu2').hide("slow"); setTimeout(checkNumTranslated(), 3000) } }
 				  ]
 				});
 			});
@@ -72,10 +74,10 @@
 				$('#eu3').contextPopup({
 				  title: 'Translation Assistant',
 				  items: [
-					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr3').show("slow"); $('#eu3').hide("slow"); } },
-					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du3').show("slow"); $('#eu3').hide("slow"); } },
-					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en3').show("slow"); $('#eu3').hide("slow"); } },
-					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr3').show("slow"); $('#eu3').hide("slow"); } }
+					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr3').show("slow"); $('#eu3').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du3').show("slow"); $('#eu3').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en3').show("slow"); $('#eu3').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr3').show("slow"); $('#eu3').hide("slow"); setTimeout(checkNumTranslated(), 3000) } }
 				  ]
 				});
 			});
@@ -84,10 +86,10 @@
 				$('#eu4').contextPopup({
 				  title: 'Translation Assistant',
 				  items: [
-					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr4').show("slow"); $('#eu4').hide("slow"); } },
-					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du4').show("slow"); $('#eu4').hide("slow"); } },
-					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en4').show("slow"); $('#eu4').hide("slow"); } },
-					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr4').show("slow"); $('#eu4').hide("slow"); } }
+					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr4').show("slow"); $('#eu4').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du4').show("slow"); $('#eu4').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en4').show("slow"); $('#eu4').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr4').show("slow"); $('#eu4').hide("slow"); setTimeout(checkNumTranslated(), 3000) } }
 				  ]
 				});
 			});
@@ -96,36 +98,50 @@
 				$('#eu5').contextPopup({
 				  title: 'Translation Assistant',
 				  items: [
-					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr5').show("slow"); $('#eu5').hide("slow"); } },
-					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du5').show("slow"); $('#eu5').hide("slow"); } },
-					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en5').show("slow"); $('#eu5').hide("slow"); } },
-					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr5').show("slow"); $('#eu5').hide("slow"); } }
+					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { $('#cr5').show("slow"); $('#eu5').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { $('#du5').show("slow"); $('#eu5').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { $('#en5').show("slow"); $('#eu5').hide("slow"); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { $('#fr5').show("slow"); $('#eu5').hide("slow"); setTimeout(checkNumTranslated(), 3000) } }
 				  ]
 				});
 			});
 		});
 		  
-				// Vervang de geselecteerde text
-			function inlineTextReplacement(replacementText) {
-				var sel, range;
-				if (window.getSelection) {
-					sel = window.getSelection();
-					if (sel.rangeCount) {
-						range = sel.getRangeAt(0);
-						range.deleteContents();
-						range.insertNode(document.createTextNode(replacementText));
-					}
+			// Vervang de geselecteerde text
+		function inlineTextReplacement(replacementText) {
+			var sel, range;
+			if (window.getSelection) {
+				sel = window.getSelection();
+				if (sel.rangeCount) {
+					range = sel.getRangeAt(0);
+					range.deleteContents();
+					range.insertNode(document.createTextNode(replacementText));
 				}
 			}
+		}
+			
+		function checkNumTranslated() {
+			numTranslated++;
+			if(numTranslated >= numToTranslate) {
+				window.location = 'https://docs.google.com/spreadsheet/viewform?formkey=dHhJdUE1VkgwaFJPTkNadWVudzlKOHc6MQ&entry_3=no-avatar';
+			}
+		}
 		</script>
 
-		<div class="text" style="margin:25px;">
-			<p style="background:#FFFEBA;">
-				Some description of the translation task.
+		<div class="text" style="margin: 25px;">
+			<div style="background:#FFFEBA;">
+				<b>Instructions</b>
+				</br>
+				To complete the translation task, translate three of the paragraphs below. After you finished the last translation, you will be redirected to the survey.
 				</br>
 				</br>
-				<a href="https://docs.google.com/spreadsheet/viewform?formkey=dHhJdUE1VkgwaFJPTkNadWVudzlKOHc6MQ&entry_3=no-avatar">Go to evaluation form</a>
-			</p>
+				To translate a paragraph, click your right mouse button on a given paragraph and pick a language to translate to. We recommend you to translate:
+				<ul>
+					<li>The first paragraph to English,</li>
+					<li>The second paragraph to Dutch,</li>
+					<li>The third paragraph to a language of your choice.</li>
+				</ul>
+			</div>
 		<!-- Text tranlation content -->
 			<p id="eu1">
 				Sagardoaren alderdi eta bitxikeria ezberdinak azaltzerako
