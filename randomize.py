@@ -36,7 +36,7 @@ def index(req):
  with open(PATH, 'w') as f:
   respondents.append(condition)
   yaml.dump(respondents, f)
- util.redirect(req, condition + '.html')
+ util.redirect(req, welcome + '-' + condition + '.html')
 
 def count_str_in_seq(s, seq):
 	return len([v for v in seq if v == s])
