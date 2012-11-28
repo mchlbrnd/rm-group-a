@@ -111,14 +111,18 @@
 				$('#eu5').contextPopup({
 				  title: 'Translation Assistant',
 				  items: [
-					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#cr5').show("slow"); $('#eu5').hide(2000); setTimeout(checkNumTranslated(), 3000) } },
-					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#du5').show("slow"); $('#eu5').hide(2000); setTimeout(checkNumTranslated(), 3000) } },
-					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#en5').show("slow"); $('#eu5').hide(2000); setTimeout(checkNumTranslated(), 3000) } },
-					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#fr5').show("slow"); $('#eu5').hide(2000); setTimeout(checkNumTranslated(), 3000) } }
+					{label:'Croatian',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix();  replacePar(); setTimeout(checkNumTranslated(), 3000) } },
+					{label:'Dutch',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#eu5').hide(1000); $('#du5').show("slow");  setTimeout(checkNumTranslated(), 3000) } },
+					{label:'English',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#eu5').hide(1000); $('#en5').show("slow");  setTimeout(checkNumTranslated(), 3000) } },
+					{label:'French',     icon:'icons/edit-lipsum.png',             action:function() { hideContextMenuFirefoxFix(); $('#eu5').hide(1000); $('#fr5').show("slow");  setTimeout(checkNumTranslated(), 3000) } }
 				  ]
 				});
 			});
 		});
+
+		function replacePar(id1, id2) {
+			$(id1).hide(1000, function() { $(id2).show("slow"); });
+		}
 		  
 		 // work around function
 		function hideContextMenuFirefoxFix() {
