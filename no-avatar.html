@@ -19,7 +19,8 @@
 	<!-- context menu -->
 	   <link rel="stylesheet" href="css/jquery.contextmenu.css">
 	   <style type="text/css">
-			p.highlight { background-color: #91D1FF; }
+			p { cursor: pointer; }
+			p.highlight { background-color: #91D1FF; }		
 	   </style>
 	
     </head>
@@ -49,7 +50,7 @@
 			
 			});
 			
-			$('p').mousedown(function () {
+			$('p').mouseover(function () {
 				// remove all existing highlights
 				$('p').removeClass('highlight');
 				// get <p>'s id and highlight if valid
@@ -344,3 +345,4 @@
 		</div>
     </body>
 </html>
+
