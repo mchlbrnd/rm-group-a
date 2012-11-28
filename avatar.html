@@ -88,32 +88,28 @@
 			$("#croatian").click(function() {
 				agent.play('GetTechy');
 				$('#language').fadeOut(800);
-				$('#' + pid).hide(2000);
-				$('#cr' + pid.charAt(2)).show("slow");
+				$('#' + pid).fadeOut(2000, function() { $('#cr' + pid.charAt(2)).fadeIn(2000); });
 				agent.stop();				
 				setTimeout(checkNumTranslated(), 3000);
 			});
 			$("#dutch").click(function() {
 				agent.play('GetTechy');
 				$('#language').fadeOut(800);
-				$('#' + pid).hide(2000);
-				$('#du' + pid.charAt(2)).show("slow");
+				$('#' + pid).fadeOut(2000, function() { $('#du' + pid.charAt(2)).fadeIn(2000); });
 				agent.stop();				
 				setTimeout(checkNumTranslated(), 3000);
 			});
 			$("#english").click(function() {
 				agent.play('GetTechy');
 				$('#language').fadeOut(800);
-				$('#' + pid).hide(2000);
-				$('#en' + pid.charAt(2)).show("slow");
+				$('#' + pid).fadeOut(2000, function() { $('#en' + pid.charAt(2)).fadeIn(2000); });				
 				agent.stop();		
 				setTimeout(checkNumTranslated(), 3000);				
 			});
 			$("#french").click(function() {
 				agent.play('GetTechy');
 				$('#language').fadeOut(800);
-				$('#' + pid).hide(2000);
-				$('#fr' + pid.charAt(2)).show("slow");
+				$('#' + pid).fadeOut(2000, function() { $('#fr' + pid.charAt(2)).fadeIn(2000); });				
 				agent.stop();				
 				setTimeout(checkNumTranslated(), 3000);
 			});
